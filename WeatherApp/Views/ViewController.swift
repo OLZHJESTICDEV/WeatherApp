@@ -44,7 +44,7 @@ class ViewController: UIViewController {
             self.cityLabel.text = weather.cityName
             self.temperatureLabel.text = weather.temperatureString + "ºC"
             self.feelsLikeTemperature.text = "Feels like: " + weather.feelsLikeTemperatureString + "ºC"
-            self.weatherIconImageView.image = UIImage(named: weather.systemIconNameString)
+            self.weatherIconImageView.image = UIImage(systemName: weather.systemIconNameString)
         }
 
     }
@@ -62,13 +62,23 @@ class ViewController: UIViewController {
     
     
     private func configure() {
-        //weatherIconImageView.backgroundColor = .yellow
+        weatherIconImageView.image = UIImage(systemName: "weather")
+        
         temperatureLabel.text = "25ºC"
-        temperatureLabel.font = UIFont(name: "Arial", size: 60)
+        temperatureLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        temperatureLabel.font = UIFont.systemFont(ofSize: 60)
+
+        
         feelsLikeTemperature.text = "Feels like 20ºC"
-        searchButton.backgroundColor = .yellow
+        feelsLikeTemperature.font = UIFont.systemFont(ofSize: 20)
+        
+        searchButton.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        
         cityLabel.text = "City"
-        backgroundImage.backgroundColor = .systemTeal
+        cityLabel.font = UIFont.systemFont(ofSize: 25)
+        
+        backgroundImage.image = UIImage(named: "background")
+        backgroundImage.contentMode = .scaleAspectFill
     }
     
     private func constraint() {
@@ -89,7 +99,7 @@ class ViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             weatherIconImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            weatherIconImageView.heightAnchor.constraint(equalToConstant: 150),
+            weatherIconImageView.heightAnchor.constraint(equalToConstant: 120),
             weatherIconImageView.widthAnchor.constraint(equalToConstant: 150),
             weatherIconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             weatherIconImageView.bottomAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: -15),
@@ -101,6 +111,8 @@ class ViewController: UIViewController {
             
             searchButton.topAnchor.constraint(equalTo: feelsLikeTemperature.bottomAnchor, constant: 400),
             searchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            searchButton.heightAnchor.constraint(equalTo: cityLabel.heightAnchor),
+            searchButton.widthAnchor.constraint(equalTo: searchButton.heightAnchor),
             
             cityLabel.topAnchor.constraint(equalTo: searchButton.topAnchor),
             cityLabel.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: -15),
