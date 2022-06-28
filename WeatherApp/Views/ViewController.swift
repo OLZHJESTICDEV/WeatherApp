@@ -26,16 +26,17 @@ class ViewController: UIViewController {
         
         searchButton.addTarget(self, action: #selector(openAlert), for: .touchUpInside)
         
-        networkWeatherManager.fetchCurrentWeather(forCity: "Almaty")
-        
-        
+        networkWeatherManager.fetchCurrentWeather(forCity: "Almaty") { currentWeather in
+            print(currentWeather.cityName)
+        }
     }
     
-    @objc private func openAlert() {
+        @objc func openAlert() {
         self.presentSearchAlertController(withTitle: "Entry city name", message: nil, style: .alert, completionHandler: { cityName in
             
-            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
-        
+            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName) { currentWeather in
+                print(currentWeather.cityName)
+            }
         })
     }
     
