@@ -24,9 +24,19 @@ class ViewController: UIViewController {
         configure()
         constraint()
         
+        searchButton.addTarget(self, action: #selector(openAlert), for: .touchUpInside)
+        
         networkWeatherManager.fetchCurrentWeather(forCity: "Almaty")
         
         
+    }
+    
+    @objc private func openAlert() {
+        self.presentSearchAlertController(withTitle: "Entry city name", message: nil, style: .alert, completionHandler: { cityName in
+            
+            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
+        
+        })
     }
     
     

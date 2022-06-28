@@ -7,8 +7,11 @@
 
 import UIKit
 
+//In other words, the closure is called after the function presentSearchAlertController() finishes executing.
+//A length task completes long after it was initiated, which means that the closure escapes and outlives the function it was created in.
 extension ViewController {
-    func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style) {
+    func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style, completionHandler: @escaping (String)->Void) {
+        
         let ac = UIAlertController(title: title, message: message, preferredStyle: style)
         ac.addTextField { tf in
             let cities = ["Almaty", "Moscow", "Nur-Sultan", "New-York"]
@@ -19,9 +22,12 @@ extension ViewController {
             let textField = ac.textFields?.first
             guard let cityName = textField?.text else {return}
             if cityName != "" {
-                print("Search info for the \(cityName)")
+                //self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
+                let city = cityName.split(separator: " ").joined(separator: "%20")
+                completionHandler(city)
             }
         }
+        
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         
         ac.addAction(search)
