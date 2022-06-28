@@ -9,7 +9,9 @@ import UIKit
 
 //In other words, the closure is called after the function presentSearchAlertController() finishes executing.
 //A length task completes long after it was initiated, which means that the closure escapes and outlives the function it was created in.
+
 extension ViewController {
+    
     func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style, completionHandler: @escaping (String)->Void) {
         
         let ac = UIAlertController(title: title, message: message, preferredStyle: style)
