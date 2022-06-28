@@ -28,17 +28,26 @@ class ViewController: UIViewController {
         
         networkWeatherManager.fetchCurrentWeather(forCity: "Almaty")
         
-        networkWeatherManager.completionHandler = {currentWeather in
-            print(currentWeather.cityName)
+        networkWeatherManager.completionHandler = {[weak self] currentWeather in
+            self?.updateInterface(weather: currentWeather)
         }
     }
     
         @objc func openAlert() {
-            self.presentSearchAlertController(withTitle: "Entry city name", message: nil, style: .alert) { cityName in
+            self.presentSearchAlertController(withTitle: "Entry city name", message: nil, style: .alert) { [unowned self] cityName in
             self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
         }
     }
     
+    func updateInterface(weather: CurrentWeather) {
+        DispatchQueue.main.async {
+            self.cityLabel.text = weather.cityName
+            self.temperatureLabel.text = weather.temperatureString + "ºC"
+            self.feelsLikeTemperature.text = "Feels like: " + weather.feelsLikeTemperatureString + "ºC"
+            self.weatherIconImageView.image = UIImage(named: weather.systemIconNameString)
+        }
+
+    }
     
     
     
@@ -53,7 +62,7 @@ class ViewController: UIViewController {
     
     
     private func configure() {
-        weatherIconImageView.backgroundColor = .yellow
+        //weatherIconImageView.backgroundColor = .yellow
         temperatureLabel.text = "25ºC"
         temperatureLabel.font = UIFont(name: "Arial", size: 60)
         feelsLikeTemperature.text = "Feels like 20ºC"
