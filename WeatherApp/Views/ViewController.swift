@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     var backgroundImage = UIImageView()
     
     var networkWeatherManager = NetworkWeatherManager()
+    var apiCaller = APICaller()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,16 +27,17 @@ class ViewController: UIViewController {
         
         searchButton.addTarget(self, action: #selector(openAlert), for: .touchUpInside)
         
-        networkWeatherManager.fetchCurrentWeather(forCity: "Almaty")
+        apiCaller.fetchCurrentWeather(forCity: "Almaty")
         
-        networkWeatherManager.completionHandler = {[weak self] currentWeather in
+        //Calling compl.handler to update our interface
+        apiCaller.completionHandler = {[weak self] currentWeather in
             self?.updateInterface(weather: currentWeather)
         }
     }
     
         @objc func openAlert() {
             self.presentSearchAlertController(withTitle: "Entry city name", message: nil, style: .alert) { [unowned self] cityName in
-            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
+                self.apiCaller.fetchCurrentWeather(forCity: cityName)
         }
     }
     
